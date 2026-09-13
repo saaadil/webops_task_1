@@ -1,0 +1,15 @@
+{
+  "proshows": [
+    { "id": "ev_p1", "name": "Rock Night", "type": "Music", "date": "2026-09-12", "time": "19:30", "venue": "Main Ground" },
+    { "id": "ev_p2", "name": "DJ Night", "type": "Music", "date": "2026-09-13", "time": "20:00", "venue": "Main Ground" },
+    { "id": "ev_p3", "name": "Fusion Band", "type": "Music", "date": "2026-09-13", "time": "18:00", "venue": "Amphitheatre" }
+  ],
+  "upcoming": [
+    { "id": "ev_u1", "name": "NITTFest Inaugural", "type": "Ceremony", "date": "2026-09-11", "time": "17:00", "venue": "Main Auditorium" },
+    { "id": "ev_u2", "name": "Hackathon '24", "type": "Tech", "date": "2026-09-12", "time": "09:00", "venue": "CS Block" },
+    { "id": "ev_u3", "name": "MUN", "type": "Non-Tech", "date": "2026-09-12", "time": "10:00", "venue": "Seminar Hall" }
+  ],
+  "announcements": [
+    { "id": "an_1", "title": "Venue change for Rock Night", "body": "Rock Night has been moved to Main Ground due to weather.", "timestamp": "2026-09-11T12:00:00+05:30" }
+  ]
+}

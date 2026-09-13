@@ -1,0 +1,23 @@
+{
+  "overall": [
+    { "rank": 1, "department": "Civil", "score": 2043 },
+    { "rank": 2, "department": "CSE", "score": 1927 },
+    { "rank": 3, "department": "ICE", "score": 1812 },
+    { "rank": 4, "department": "Architecture", "score": 1658 },
+    { "rank": 5, "department": "Chemical", "score": 1497 },
+    { "rank": 6, "department": "Computer App", "score": 1362 },
+    { "rank": 7, "department": "Energy & Env", "score": 1214 },
+    { "rank": 8, "department": "MCA", "score": 1358 },
+    { "rank": 9, "department": "Instrumentation", "score": 993 }
+  ],
+  "events": [
+    { "rank": 1, "department": "Civil", "score": 2000 },
+    { "rank": 2, "department": "Computer Science", "score": 1000 },
+    { "rank": 3, "department": "Instrumentation", "score": 1000 },
+    { "rank": 4, "department": "Architecture", "score": 1650 },
+    { "rank": 5, "department": "Chemical Eng", "score": 1500 },
+    { "rank": 6, "department": "MCA", "score": 1350 },
+    { "rank": 7, "department": "Energy & Env", "score": 1200 }
+  ],
+  "last_updated": "2026-09-11T18:41:00+05:30"
+}

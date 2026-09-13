@@ -1,0 +1,14 @@
+{
+  "user_id": "1031230012",
+  "name": "Srishanth S",
+  "balance": 400,
+  "currency": "INR",
+  "card_number_masked": "•••• •••• 4125",
+  "card_id": "110124125",
+  "status": "active",
+  "recent_transactions": [
+    { "id": "txn_9182", "merchant": "Mega Store - Snacks", "amount": -80, "timestamp": "2026-09-11T13:12:00+05:30" },
+    { "id": "txn_9179", "merchant": "Ibaco", "amount": -150, "timestamp": "2026-09-11T11:45:00+05:30" },
+    { "id": "txn_9150", "merchant": "Top-up", "amount": 500, "timestamp": "2026-09-10T09:00:00+05:30" }
+  ]
+}

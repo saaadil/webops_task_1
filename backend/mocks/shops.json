@@ -1,0 +1,36 @@
+{
+  "shops": [
+    {
+      "id": "shop_01",
+      "name": "Mega Store - Snacks",
+      "category": "Non-Veg",
+      "description": "Snacks and beverages",
+      "price_range": "₹30 - ₹150",
+      "location": "Near Main Ground"
+    },
+    {
+      "id": "shop_02",
+      "name": "Ibaco",
+      "category": "Non-Veg",
+      "description": "Ice Creams and Desserts",
+      "price_range": "₹50 - ₹200",
+      "location": "Food Court, Block A"
+    },
+    {
+      "id": "shop_03",
+      "name": "Green Leaf Veg Corner",
+      "category": "Veg",
+      "description": "South Indian tiffin and juices",
+      "price_range": "₹20 - ₹100",
+      "location": "Food Court, Block A"
+    },
+    {
+      "id": "shop_04",
+      "name": "Chai Point Stall",
+      "category": "Beverages",
+      "description": "Tea, coffee, and cold beverages",
+      "price_range": "₹15 - ₹60",
+      "location": "Near Amphitheatre"
+    }
+  ]
+}
