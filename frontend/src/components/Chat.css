@@ -1,0 +1,39 @@
+.markdown-content {
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.markdown-content p {
+  margin: 0 0 8px 0;
+}
+
+.markdown-content p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-content strong,
+.markdown-content b {
+  font-weight: 700;
+  color: inherit;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  margin: 6px 0 8px 0;
+  padding-left: 22px;
+}
+
+.markdown-content li {
+  margin-bottom: 4px;
+}
+
+.markdown-content li:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-content code {
+  font-size: 0.85em;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
