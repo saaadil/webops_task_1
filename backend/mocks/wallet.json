@@ -1,6 +1,7 @@
 {
   "user_id": "1031230012",
   "name": "Srishanth S",
+  "department": "ICE",
   "balance": 400,
   "currency": "INR",
   "card_number_masked": "•••• •••• 4125",

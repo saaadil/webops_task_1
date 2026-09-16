@@ -58,14 +58,14 @@ const tools = [
     type: 'function',
     function: {
       name: 'getEvents',
-      description: 'Get festival events (proshows or upcoming), optionally filtered by date.',
+      description: 'Get festival events. Use "all" when the user is asking for a general overview of events rather than one specific category (e.g. "what events are happening" should trigger type: "all" in a single call, rather than calling this tool twice with "proshows" then "upcoming"). Use "proshows" or "upcoming" for specific categories, optionally filtered by date.',
       parameters: {
         type: 'object',
         properties: {
           type: {
             type: 'string',
-            enum: ['proshows', 'upcoming'],
-            description: 'The type of events to retrieve (proshows or upcoming).'
+            enum: ['all', 'proshows', 'upcoming'],
+            description: 'The type of events to retrieve ("all" for general overview of all events, "proshows", or "upcoming").'
           },
           date: {
             type: 'string',

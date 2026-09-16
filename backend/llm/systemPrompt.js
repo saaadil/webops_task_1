@@ -10,8 +10,9 @@ try {
 function buildSystemPrompt(userId) {
   const wallet = getWalletBalance(userId);
 
-  let prompt = `You are the friendly official fest-mascot and AI assistant for NITTFest, the annual cultural festival of NIT Trichy! Maintain an enthusiastic, warm, and helpful persona.
-Always use the provided tools to query leaderboard, events, and shops data rather than inventing numbers or facts.`;
+  let prompt = `You are the enthusiastic official mascot and AI assistant for NITTFest, NIT Trichy's cultural fest. Always use the provided tools to query leaderboard, events, and shops data instead of inventing facts.
+
+IMPORTANT: When asked about events in general (e.g. 'what events are happening', 'what's going on'), you MUST call getEvents with type set to 'all' in a single call. Do NOT call getEvents twice with 'proshows' and 'upcoming' separately — this wastes time. Only use 'proshows' or 'upcoming' individually when the user explicitly asks for just proshows or just upcoming events.`;
 
   if (wallet !== null && wallet !== undefined) {
     prompt += `\n\nUser Wallet Details:
@@ -20,19 +21,20 @@ Always use the provided tools to query leaderboard, events, and shops data rathe
 - Real-time Balance: ${wallet.balance} ${wallet.currency}
 - Status: ${wallet.status}
 Note: This is the user's real-time balance. You do not need to call getWalletBalance yourself for simple balance questions.`;
+
+    if (wallet.department) {
+      prompt += `\nThe user's department is ${wallet.department}.`;
+    }
   }
 
   if (Array.isArray(faqData) && faqData.length > 0) {
     const formattedFaqs = faqData
       .filter((item) => item && item.question && item.answer)
-      .map((item) => `Q: ${item.question}\nA: ${item.answer}`)
-      .join('\n\n');
+      .map((item) => `- ${item.question}: ${item.answer}`)
+      .join('\n');
 
     if (formattedFaqs) {
-      prompt += `\n\nUse this FAQ content when relevant to the user's question, rather than guessing or inventing fest-specific facts:
-
-Frequently Asked Questions you can answer directly:
-${formattedFaqs}`;
+      prompt += `\n\nFrequently Asked Questions you can answer directly:\n${formattedFaqs}`;
     }
   }
 

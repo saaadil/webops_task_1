@@ -1,26 +1,26 @@
 [
   {
     "question": "What is the lost and found process?",
-    "answer": "If you have lost or found any item, please report to the NITTFest Control Desk located near the Student Activity Centre (SAC). Items will be logged and can be claimed by verifying ownership."
+    "answer": "Report or claim lost/found items at the NITTFest Control Desk near the Student Activity Centre (SAC) by verifying ownership."
   },
   {
     "question": "Is accommodation available for outstation attendees?",
-    "answer": "Yes, accommodation is provided in campus hostels for registered outstation participants on a first-come, first-served basis. Please visit the Hospitality Desk at the main gate upon arrival with your college ID."
+    "answer": "Hostel accommodation is available first-come, first-served for registered outstation participants. Visit the Hospitality Desk at the main gate with your college ID."
   },
   {
     "question": "What are the general fest rules and code of conduct?",
-    "answer": "Attendees must carry a valid college ID card at all times. Alcohol, smoking, illicit substances, and dangerous objects are strictly prohibited on campus. Respect fellow attendees and follow instructions from fest organizers and security personnel."
+    "answer": "Carry your college ID at all times. Alcohol, smoking, illicit substances, and hazardous items are strictly prohibited on campus."
   },
   {
     "question": "What is the emergency and medical contact information?",
-    "answer": "In case of a medical emergency, visit the NIT Trichy Campus Hospital near the administrative block, available 24/7, or contact the emergency response team at +91-431-2503888."
+    "answer": "The 24/7 Campus Hospital is near the administrative block, or call emergency response at +91-431-2503888."
   },
   {
     "question": "How can attendees access Wi-Fi on campus during the fest?",
-    "answer": "Guest Wi-Fi is available across major festival venues. Connect to the 'NITT-Guest' network and register using your mobile number and OTP to gain internet access."
+    "answer": "Connect to the 'NITT-Guest' network across festival venues and register with your mobile number and OTP."
   },
   {
     "question": "What is the entry and registration process at the gate?",
-    "answer": "Entry is through the Main Campus Gate. All attendees must present a valid government or college photo ID and their NITTFest event pass/registration QR code for scanning and security verification."
+    "answer": "Enter via the Main Campus Gate with a valid photo ID and your NITTFest registration QR pass."
   }
 ]

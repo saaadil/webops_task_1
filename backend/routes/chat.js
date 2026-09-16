@@ -17,78 +17,83 @@ router.post('/', authenticateToken, async (req, res) => {
     const userId = req.user?.userId;
     const systemPrompt = buildSystemPrompt(userId);
 
-    const initialMessages = [
+    const messages = [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: req.body.message }
     ];
 
-    const response = await llmClient.sendChatMessage(initialMessages, tools);
-    const choice = response?.choices?.[0];
-    const assistantMessage = choice?.message;
+    const MAX_ITERATIONS = 2;
+    let iteration = 0;
+    let finalReply = null;
 
-    if (assistantMessage?.tool_calls && assistantMessage.tool_calls.length > 0) {
-      const toolMessages = [];
+    while (iteration < MAX_ITERATIONS) {
+      iteration++;
+      const response = await llmClient.sendChatMessage(messages, tools);
+      const choice = response?.choices?.[0];
+      const finishReason = choice?.finish_reason;
+      const assistantMessage = choice?.message;
 
-      for (const toolCall of assistantMessage.tool_calls) {
-        const functionName = toolCall.function?.name;
-        let args = {};
+      if (finishReason === 'tool_calls' || (assistantMessage?.tool_calls && assistantMessage.tool_calls.length > 0)) {
+        const toolMessages = [];
 
-        try {
-          args = typeof toolCall.function?.arguments === 'string'
-            ? JSON.parse(toolCall.function.arguments)
-            : (toolCall.function?.arguments || {});
-        } catch (parseError) {
-          console.error(`Failed to parse arguments for tool ${functionName}:`, parseError);
+        for (const toolCall of assistantMessage.tool_calls) {
+          const functionName = toolCall.function?.name;
+          let args = {};
+
+          try {
+            args = typeof toolCall.function?.arguments === 'string'
+              ? JSON.parse(toolCall.function.arguments)
+              : (toolCall.function?.arguments || {});
+          } catch (parseError) {
+            console.error(`Failed to parse arguments for tool ${functionName}:`, parseError);
+            toolMessages.push({
+              role: 'tool',
+              tool_call_id: toolCall.id,
+              content: JSON.stringify({ error: `Failed to parse arguments for tool ${functionName}` })
+            });
+            continue;
+          }
+
+          let result;
+          try {
+            if (functionName === 'getLeaderboard') {
+              result = toolFunctions.getLeaderboard(args.type, args.department);
+            } else if (functionName === 'getWalletBalance') {
+              result = toolFunctions.getWalletBalance(args.userId);
+            } else if (functionName === 'getShops') {
+              result = toolFunctions.getShops(args.category);
+            } else if (functionName === 'getEvents') {
+              result = toolFunctions.getEvents(args.type, args.date);
+            } else if (typeof toolFunctions[functionName] === 'function') {
+              result = toolFunctions[functionName](args);
+            } else {
+              result = { error: `Tool ${functionName} not found` };
+            }
+          } catch (execError) {
+            console.error(`Error executing tool ${functionName}:`, execError);
+            result = { error: `Error executing tool ${functionName}` };
+          }
+
           toolMessages.push({
             role: 'tool',
             tool_call_id: toolCall.id,
-            content: JSON.stringify({ error: `Failed to parse arguments for tool ${functionName}` })
+            content: JSON.stringify(result)
           });
-          continue;
         }
 
-        let result;
-        try {
-          if (functionName === 'getLeaderboard') {
-            result = toolFunctions.getLeaderboard(args.type, args.department);
-          } else if (functionName === 'getWalletBalance') {
-            result = toolFunctions.getWalletBalance(args.userId);
-          } else if (functionName === 'getShops') {
-            result = toolFunctions.getShops(args.category);
-          } else if (functionName === 'getEvents') {
-            result = toolFunctions.getEvents(args.type, args.date);
-          } else if (typeof toolFunctions[functionName] === 'function') {
-            result = toolFunctions[functionName](args);
-          } else {
-            result = { error: `Tool ${functionName} not found` };
-          }
-        } catch (execError) {
-          console.error(`Error executing tool ${functionName}:`, execError);
-          result = { error: `Error executing tool ${functionName}` };
-        }
-
-        toolMessages.push({
-          role: 'tool',
-          tool_call_id: toolCall.id,
-          content: JSON.stringify(result)
-        });
+        messages.push(assistantMessage);
+        messages.push(...toolMessages);
+      } else {
+        finalReply = assistantMessage?.content || '';
+        break;
       }
-
-      const followUpMessages = [
-        ...initialMessages,
-        assistantMessage,
-        ...toolMessages
-      ];
-
-      const followUpResponse = await llmClient.sendChatMessage(followUpMessages, tools);
-      const followUpChoice = followUpResponse?.choices?.[0];
-      const replyText = followUpChoice?.message?.content || '';
-
-      return res.json({ reply: replyText });
     }
 
-    const replyText = assistantMessage?.content || '';
-    return res.json({ reply: replyText });
+    if (finalReply === null) {
+      finalReply = "I found some information but couldn't finish putting it together — could you try asking more specifically?";
+    }
+
+    return res.json({ reply: finalReply });
   } catch (error) {
     console.error('Groq chat error:', error);
     return res.status(500).json({ error: 'Something went wrong, please try again.' });
