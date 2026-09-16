@@ -39,23 +39,39 @@ export default function Chat() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleSend = async (e) => {
-    if (e) {
-      e.preventDefault();
+  const QUICK_REPLIES = [
+    { label: '📅 Events', message: 'What events are happening?' },
+    { label: '🏆 Leaderboard', message: "What's my department's rank?" },
+    { label: '💰 Wallet', message: "What's my wallet balance?" },
+    { label: '❓ Help', message: "What are the fest rules and where's lost and found?" }
+  ];
+
+  const handleSend = async (messageOverrideOrEvent, maybeOverride) => {
+    let messageOverride =
+      typeof messageOverrideOrEvent === 'string'
+        ? messageOverrideOrEvent
+        : maybeOverride;
+
+    if (messageOverrideOrEvent && typeof messageOverrideOrEvent.preventDefault === 'function') {
+      messageOverrideOrEvent.preventDefault();
     }
 
-    const trimmedInput = input.trim();
-    if (!trimmedInput || loading || !token) {
+    const isOverride = typeof messageOverride === 'string';
+    const messageToSend = (isOverride ? messageOverride : input).trim();
+
+    if (!messageToSend || loading || !token) {
       return;
     }
 
-    const userMessage = { role: 'user', text: trimmedInput };
+    const userMessage = { role: 'user', text: messageToSend };
     setMessages((prev) => [...prev, userMessage]);
-    setInput('');
+    if (!isOverride) {
+      setInput('');
+    }
     setLoading(true);
 
     try {
-      const reply = await sendMessage(token, trimmedInput);
+      const reply = await sendMessage(token, messageToSend);
       setMessages((prev) => [...prev, { role: 'assistant', text: reply }]);
     } catch (err) {
       setMessages((prev) => [
@@ -75,6 +91,7 @@ export default function Chat() {
   };
 
   const isButtonDisabled = loading || !input.trim() || !token;
+  const isQuickReplyDisabled = loading || !token;
 
   return (
     <div style={styles.container}>
@@ -130,6 +147,24 @@ export default function Chat() {
           </div>
         )}
         <div ref={messagesEndRef} />
+      </div>
+
+      <div style={styles.quickRepliesContainer}>
+        {QUICK_REPLIES.map((qr) => (
+          <button
+            key={qr.label}
+            type="button"
+            onClick={() => handleSend(qr.message)}
+            disabled={isQuickReplyDisabled}
+            style={{
+              ...styles.quickReplyButton,
+              opacity: isQuickReplyDisabled ? 0.6 : 1,
+              cursor: isQuickReplyDisabled ? 'not-allowed' : 'pointer'
+            }}
+          >
+            {qr.label}
+          </button>
+        ))}
       </div>
 
       <form onSubmit={handleSend} style={styles.inputForm}>
@@ -232,6 +267,24 @@ const styles = {
   messageText: {
     whiteSpace: 'pre-wrap'
   },
+  quickRepliesContainer: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '8px',
+    padding: '10px 16px',
+    borderTop: '1px solid #e2e8f0',
+    backgroundColor: '#f8fafc'
+  },
+  quickReplyButton: {
+    padding: '6px 12px',
+    fontSize: '0.85rem',
+    backgroundColor: '#ffffff',
+    color: '#1e293b',
+    border: '1px solid #cbd5e1',
+    borderRadius: '16px',
+    fontWeight: 500,
+    transition: 'all 0.15s ease'
+  },
   inputForm: {
     display: 'flex',
     padding: '16px',
@@ -239,6 +292,7 @@ const styles = {
     backgroundColor: '#ffffff',
     gap: '8px'
   },
+
   inputField: {
     flex: 1,
     padding: '12px 14px',

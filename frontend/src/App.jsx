@@ -1,9 +1,12 @@
 import Chat from './components/Chat';
+import Admin from './components/Admin';
 
 function App() {
+  const isAdmin = typeof window !== 'undefined' && window.location.pathname === '/admin';
+
   return (
     <main>
-      <Chat />
+      {isAdmin ? <Admin /> : <Chat />}
     </main>
   );
 }

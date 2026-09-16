@@ -38,3 +38,59 @@ export async function sendMessage(token, message) {
 
   return data.reply;
 }
+
+export async function getUsage(adminKey) {
+  const response = await fetch(`${BASE_URL}/admin/usage`, {
+    method: 'GET',
+    headers: {
+      'x-admin-key': adminKey
+    }
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    const errorMessage = data.error || data.message || `Request failed with status ${response.status}`;
+    throw new Error(errorMessage);
+  }
+
+  return data;
+}
+
+export async function getAnnouncements(adminKey) {
+  const response = await fetch(`${BASE_URL}/admin/announcements`, {
+    method: 'GET',
+    headers: {
+      'x-admin-key': adminKey
+    }
+  });
+
+  const data = await response.json().catch(() => ([]));
+
+  if (!response.ok) {
+    const errorMessage = (typeof data === 'object' && data !== null && (data.error || data.message)) || `Request failed with status ${response.status}`;
+    throw new Error(errorMessage);
+  }
+
+  return data;
+}
+
+export async function postAnnouncement(adminKey, title, body) {
+  const response = await fetch(`${BASE_URL}/admin/announcements`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-admin-key': adminKey
+    },
+    body: JSON.stringify({ title, body })
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    const errorMessage = (typeof data === 'object' && data !== null && (data.error || data.message)) || `Request failed with status ${response.status}`;
+    throw new Error(errorMessage);
+  }
+
+  return data;
+}
