@@ -15,10 +15,16 @@ export default function Chat({ user, onLogout }) {
   }, [messages]);
 
   const QUICK_REPLIES = [
-    { label: '📅 Events', message: 'What events are happening?' },
-    { label: '🏆 Leaderboard', message: "What's my department's rank?" },
-    { label: '💰 Wallet', message: "What's my wallet balance?" },
-    { label: '❓ Help', message: "What are the fest rules and where's lost and found?" }
+    { label: '📅 Events', message: 'What events are happening?', variantClass: 'quick-reply-filled' },
+    { label: '🏆 Leaderboard', message: "What's my department's rank?", variantClass: 'quick-reply-outlined' },
+    { label: '💰 Wallet', message: "What's my wallet balance?", variantClass: 'quick-reply-filled' },
+    { label: '❓ Help', message: "What are the fest rules and where's lost and found?", variantClass: 'quick-reply-outlined' }
+  ];
+
+  const SAMPLE_PROMPTS = [
+    { text: "What's my dept's leaderboard rank?", icon: '🏆' },
+    { text: "How much NF-balance do I have left?", icon: '💰' },
+    { text: "Which events are happening right now?", icon: '📅' }
   ];
 
   const handleSend = async (messageOverrideOrEvent, maybeOverride) => {
@@ -79,19 +85,24 @@ export default function Chat({ user, onLogout }) {
   const isButtonDisabled = loading || !input.trim();
   const isQuickReplyDisabled = loading;
 
+  const userSubtitle = user?.name
+    ? `${user.name} (${user.department || 'NITT'}) — Official Fest Companion`
+    : 'Official Fest Companion';
+
   return (
     <div style={styles.container}>
-      <header style={styles.header}>
+      <header style={styles.header} className="chat-header-animated">
         <div>
           <h1 style={styles.title}>NITTFest AI Assistant</h1>
           <div style={styles.subtitle}>
-            Official Fest Companion {user?.name ? `• ${user.name} (${user.department || ''})` : ''}
+            {userSubtitle}
           </div>
         </div>
         <button
           type="button"
           onClick={handleLogout}
-          style={styles.logoutButton}
+          className="logout-btn-outline"
+          aria-label="Log out of session"
         >
           Log out
         </button>
@@ -103,10 +114,25 @@ export default function Chat({ user, onLogout }) {
             <div style={styles.emptyStateIconBadge}>✨</div>
             <div style={styles.emptyStateTitle}>NITTFest Companion</div>
             <div style={styles.emptyState}>
-              Welcome! Ask anything about NITTFest events, leaderboard, or your wallet.
+              Ask questions about live schedules, leaderboards, or your digital wallet. Try one of these:
+            </div>
+            <div className="empty-state-prompt-grid" role="region" aria-label="Suggested prompts">
+              {SAMPLE_PROMPTS.map((prompt) => (
+                <button
+                  key={prompt.text}
+                  type="button"
+                  className="prompt-suggestion-pill"
+                  onClick={() => handleSend(prompt.text)}
+                  disabled={loading}
+                >
+                  <span>{prompt.text}</span>
+                  <span className="prompt-pill-icon" aria-hidden="true">{prompt.icon}</span>
+                </button>
+              ))}
             </div>
           </div>
         )}
+
         {messages.map((msg, index) => {
           const isUser = msg.role === 'user';
           const timeString = new Date(msg.timestamp || Date.now()).toLocaleTimeString([], {
@@ -171,6 +197,7 @@ export default function Chat({ user, onLogout }) {
             </div>
           );
         })}
+
         {loading && (
           <div
             className="message-entrance"
@@ -209,7 +236,7 @@ export default function Chat({ user, onLogout }) {
           <button
             key={qr.label}
             type="button"
-            className="quick-reply-btn"
+            className={`quick-reply-btn ${qr.variantClass}`}
             onClick={() => handleSend(qr.message)}
             disabled={isQuickReplyDisabled}
           >
@@ -226,7 +253,7 @@ export default function Chat({ user, onLogout }) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           disabled={loading}
-          placeholder="Type your message..."
+          placeholder="Ask me anything about the fest…"
         />
         <button
           type="submit"
@@ -269,8 +296,9 @@ const styles = {
   },
   header: {
     padding: '24px 32px',
-    borderBottom: '1.5px solid #EFE8DC',
+    borderBottom: '2px solid rgba(255, 92, 77, 0.22)',
     background: 'radial-gradient(circle at 15% 40%, rgba(255, 200, 87, 0.14) 0%, rgba(253, 251, 247, 0) 65%), linear-gradient(180deg, #FAF5EA 0%, #FDFBF7 100%)',
+    boxShadow: '0 4px 18px rgba(255, 92, 77, 0.08)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between'
@@ -285,30 +313,11 @@ const styles = {
     lineHeight: 1.15
   },
   subtitle: {
-    fontSize: '0.8rem',
-    fontWeight: 700,
-    color: '#FF5C4D',
-    letterSpacing: '0.6px',
-    textTransform: 'uppercase',
-    marginTop: '4px'
-  },
-  logoutButton: {
-    padding: '8px 16px',
-    backgroundColor: 'transparent',
-    color: '#FF5C4D',
-    border: '1.5px solid #FF5C4D',
-    borderRadius: '10px',
-    fontSize: '0.85rem',
+    fontSize: '0.82rem',
     fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s ease'
-  },
-  errorBanner: {
-    backgroundColor: '#FDF2F0',
-    color: '#C53030',
-    padding: '12px 32px',
-    fontSize: '0.9rem',
-    borderBottom: '1px solid #FED7D2'
+    color: '#FF5C4D',
+    letterSpacing: '0.3px',
+    marginTop: '4px'
   },
   messagesContainer: {
     flex: 1,
@@ -339,7 +348,8 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: '1.75rem',
-    marginBottom: '16px'
+    marginBottom: '16px',
+    boxShadow: '0 2px 8px rgba(26, 26, 46, 0.04)'
   },
   emptyStateTitle: {
     fontFamily: "'Fraunces', Georgia, serif",
@@ -352,7 +362,7 @@ const styles = {
     color: '#7C7567',
     fontSize: '0.96rem',
     lineHeight: 1.6,
-    maxWidth: '420px',
+    maxWidth: '440px',
     margin: 0
   },
   messageRow: {
@@ -407,8 +417,7 @@ const styles = {
     fontSize: '0.72rem',
     marginBottom: '6px',
     fontWeight: 700,
-    letterSpacing: '0.5px',
-    textTransform: 'uppercase'
+    letterSpacing: '0.5px'
   },
   messageText: {
     whiteSpace: 'pre-wrap'
@@ -430,7 +439,8 @@ const styles = {
   inputForm: {
     display: 'flex',
     padding: '16px 32px 24px 32px',
-    borderTop: '1.5px solid #EFE8DC',
+    borderTop: '1.5px solid rgba(255, 92, 77, 0.22)',
+    boxShadow: '0 -4px 18px rgba(255, 92, 77, 0.05)',
     backgroundColor: '#FDFBF7',
     gap: '12px'
   }
