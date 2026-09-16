@@ -13,7 +13,7 @@ const tools = [
             description: 'The type of leaderboard to retrieve (overall or events).'
           },
           department: {
-            type: 'string',
+            type: ['string', 'null'],
             description: 'Optional department name to filter by.'
           }
         },
@@ -47,7 +47,7 @@ const tools = [
         type: 'object',
         properties: {
           category: {
-            type: 'string',
+            type: ['string', 'null'],
             description: 'Optional category (e.g. Veg, Non-Veg, Beverages) to filter shops.'
           }
         }
@@ -68,7 +68,7 @@ const tools = [
             description: 'The type of events to retrieve ("all" for general overview of all events, "proshows", or "upcoming").'
           },
           date: {
-            type: 'string',
+            type: ['string', 'null'],
             description: 'Optional date string (YYYY-MM-DD) to filter events.'
           }
         },
