@@ -1,4 +1,21 @@
+const fs = require('fs');
+const path = require('path');
 const { getWalletBalance } = require('../tools/index');
+
+const announcementsPath = path.join(__dirname, '../mocks/announcements.json');
+
+function getAnnouncements() {
+  try {
+    if (fs.existsSync(announcementsPath)) {
+      const raw = fs.readFileSync(announcementsPath, 'utf8');
+      const parsed = JSON.parse(raw || '[]');
+      return Array.isArray(parsed) ? parsed : [];
+    }
+  } catch (error) {
+    // Safely ignore file read/parse errors
+  }
+  return [];
+}
 
 let faqData = [];
 try {
@@ -45,6 +62,18 @@ Note: This is the user's real-time balance. You do not need to call getWalletBal
 
     if (formattedFaqs) {
       prompt += `\n\nFrequently Asked Questions you can answer directly:\n${formattedFaqs}`;
+    }
+  }
+
+  const announcements = getAnnouncements();
+  if (Array.isArray(announcements) && announcements.length > 0) {
+    const formattedAnnouncements = announcements
+      .filter((item) => item && (item.title || item.body))
+      .map((item) => `- ${item.title ? item.title + ': ' : ''}${item.body || ''}`)
+      .join('\n');
+
+    if (formattedAnnouncements) {
+      prompt += `\n\nCurrent Fest Announcements:\n${formattedAnnouncements}`;
     }
   }
 

@@ -5,6 +5,7 @@ const { tools } = require('../llm/toolSchema');
 const { buildSystemPrompt } = require('../llm/systemPrompt');
 const llmClient = require('../llm/client');
 const toolFunctions = require('../tools/index');
+const { recordUsage } = require('../usageTracker');
 
 const router = express.Router();
 
@@ -29,6 +30,9 @@ router.post('/', authenticateToken, async (req, res) => {
     while (iteration < MAX_ITERATIONS) {
       iteration++;
       const response = await llmClient.sendChatMessage(messages, tools);
+      if (response?.usage) {
+        recordUsage(response.usage);
+      }
       const choice = response?.choices?.[0];
       const finishReason = choice?.finish_reason;
       const assistantMessage = choice?.message;

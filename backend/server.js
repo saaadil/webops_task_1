@@ -5,6 +5,7 @@ const rateLimiter = require('./middleware/rateLimiter');
 const { authenticateToken } = require('./middleware/auth');
 const authRoutes = require('./routes/auth');
 const chatRouter = require('./routes/chat');
+const adminRouter = require('./routes/admin');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(rateLimiter);
 
 app.use('/auth', authRoutes);
 app.use('/chat', chatRouter);
+app.use('/admin', adminRouter);
 
 app.get('/me', authenticateToken, (req, res) => {
   res.json({ user: req.user });
