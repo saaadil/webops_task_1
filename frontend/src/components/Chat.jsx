@@ -1,40 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { login, sendMessage } from '../api/client';
+import { logout, sendMessage } from '../api/client';
 import './Chat.css';
 
-export default function Chat() {
-  const [token, setToken] = useState(null);
-  const [loginError, setLoginError] = useState(null);
+export default function Chat({ user, onLogout }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    async function performLogin() {
-      try {
-        const userToken = await login('1031230012', 'Aadil');
-        if (isMounted) {
-          setToken(userToken);
-          setLoginError(null);
-        }
-      } catch (err) {
-        if (isMounted) {
-          setLoginError(err.message || 'Login failed');
-        }
-      }
-    }
-
-    performLogin();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -60,7 +34,7 @@ export default function Chat() {
     const isOverride = typeof messageOverride === 'string';
     const messageToSend = (isOverride ? messageOverride : input).trim();
 
-    if (!messageToSend || loading || !token) {
+    if (!messageToSend || loading) {
       return;
     }
 
@@ -72,7 +46,7 @@ export default function Chat() {
     setLoading(true);
 
     try {
-      const reply = await sendMessage(token, messageToSend);
+      const reply = await sendMessage(messageToSend);
       setMessages((prev) => [...prev, { role: 'assistant', text: reply, timestamp: Date.now() }]);
     } catch (err) {
       setMessages((prev) => [
@@ -91,23 +65,37 @@ export default function Chat() {
     }
   };
 
-  const isButtonDisabled = loading || !input.trim() || !token;
-  const isQuickReplyDisabled = loading || !token;
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      // Proceed even if network error occurs
+    }
+    if (typeof onLogout === 'function') {
+      onLogout();
+    }
+  };
+
+  const isButtonDisabled = loading || !input.trim();
+  const isQuickReplyDisabled = loading;
 
   return (
     <div style={styles.container}>
       <header style={styles.header}>
         <div>
           <h1 style={styles.title}>NITTFest AI Assistant</h1>
-          <div style={styles.subtitle}>Official Fest Companion</div>
+          <div style={styles.subtitle}>
+            Official Fest Companion {user?.name ? `• ${user.name} (${user.department || ''})` : ''}
+          </div>
         </div>
+        <button
+          type="button"
+          onClick={handleLogout}
+          style={styles.logoutButton}
+        >
+          Log out
+        </button>
       </header>
-
-      {loginError && (
-        <div style={styles.errorBanner}>
-          <strong>Login Error:</strong> {loginError}
-        </div>
-      )}
 
       <div style={styles.messagesContainer} className="messages-scroll-area">
         {messages.length === 0 && (
@@ -237,8 +225,8 @@ export default function Chat() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          disabled={loading || !token}
-          placeholder={token ? 'Type your message...' : 'Logging in...'}
+          disabled={loading}
+          placeholder="Type your message..."
         />
         <button
           type="submit"
@@ -284,7 +272,7 @@ const styles = {
     borderBottom: '1.5px solid #EFE8DC',
     background: 'radial-gradient(circle at 15% 40%, rgba(255, 200, 87, 0.14) 0%, rgba(253, 251, 247, 0) 65%), linear-gradient(180deg, #FAF5EA 0%, #FDFBF7 100%)',
     display: 'flex',
-    alignItems: 'baseline',
+    alignItems: 'center',
     justifyContent: 'space-between'
   },
   title: {
@@ -303,6 +291,17 @@ const styles = {
     letterSpacing: '0.6px',
     textTransform: 'uppercase',
     marginTop: '4px'
+  },
+  logoutButton: {
+    padding: '8px 16px',
+    backgroundColor: 'transparent',
+    color: '#FF5C4D',
+    border: '1.5px solid #FF5C4D',
+    borderRadius: '10px',
+    fontSize: '0.85rem',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: 'all 0.2s ease'
   },
   errorBanner: {
     backgroundColor: '#FDF2F0',

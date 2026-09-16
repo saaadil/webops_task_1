@@ -3,5 +3,10 @@
     "title": "Venue Change",
     "body": "Rock Night moved to Main Ground",
     "timestamp": 1789523105414
+  },
+  {
+    "title": "Test Announcement",
+    "body": "This is a test from the admin page",
+    "timestamp": 1789523586767
   }
 ]

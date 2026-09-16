@@ -1,4 +1,5 @@
 {
+  "_comment": "Note: This is currently a single mock user. Any signed-up user testing the wallet feature should sign up with this exact roll number (1031230012) to see matching mock wallet data. Other roll numbers will fall back gracefully with no wallet data found.",
   "user_id": "1031230012",
   "name": "Srishanth S",
   "department": "ICE",

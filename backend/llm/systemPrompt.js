@@ -24,8 +24,11 @@ try {
   faqData = [];
 }
 
-function buildSystemPrompt(userId) {
-  const wallet = getWalletBalance(userId);
+function buildSystemPrompt(user) {
+  const userObj = typeof user === 'object' && user !== null ? user : {};
+  const rollNo = userObj.rollNo || (typeof user === 'string' ? user : undefined);
+  const department = userObj.department;
+  const wallet = rollNo ? getWalletBalance(rollNo) : null;
 
   let prompt = `You are the enthusiastic official mascot and AI assistant for NITTFest, NIT Trichy's cultural fest. Always use the provided tools to query leaderboard, events, and shops data instead of inventing facts.
 
@@ -41,6 +44,10 @@ LEADERBOARD NUDGES: When a user asks how to improve their department's standing 
 
 SMART SPEND ADVISOR: When a user asks what they can afford, what to buy, or for food/shop suggestions within their budget, call suggestSpendCombo with the user's ID. Present the returned affordableShops and suggestedCombos numbers EXACTLY as returned by the tool — do not perform your own arithmetic or estimate prices yourself. If the tool returns no affordable options, communicate that honestly and suggest the user check back after topping up their balance.`;
 
+  if (department) {
+    prompt += `\n\nThe user's department is ${department}.`;
+  }
+
   if (wallet !== null && wallet !== undefined) {
     prompt += `\n\nUser Wallet Details:
 - User ID: ${wallet.user_id}
@@ -48,10 +55,9 @@ SMART SPEND ADVISOR: When a user asks what they can afford, what to buy, or for 
 - Real-time Balance: ${wallet.balance} ${wallet.currency}
 - Status: ${wallet.status}
 Note: This is the user's real-time balance. You do not need to call getWalletBalance yourself for simple balance questions.`;
-
-    if (wallet.department) {
-      prompt += `\nThe user's department is ${wallet.department}.`;
-    }
+  } else {
+    prompt += `\n\nUser Wallet Details:
+No wallet data found for your account. If the user asks about their wallet balance, inform them kindly that no wallet data was found for their account.`;
   }
 
   if (Array.isArray(faqData) && faqData.length > 0) {

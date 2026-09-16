@@ -15,8 +15,7 @@ router.post('/', authenticateToken, async (req, res) => {
   }
 
   try {
-    const userId = req.user?.userId;
-    const systemPrompt = buildSystemPrompt(userId);
+    const systemPrompt = buildSystemPrompt(req.user);
 
     const messages = [
       { role: 'system', content: systemPrompt },
