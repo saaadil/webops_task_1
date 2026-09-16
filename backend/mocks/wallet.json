@@ -1,16 +1,284 @@
-{
-  "_comment": "Note: This is currently a single mock user. Any signed-up user testing the wallet feature should sign up with this exact roll number (1031230012) to see matching mock wallet data. Other roll numbers will fall back gracefully with no wallet data found.",
-  "user_id": "1031230012",
-  "name": "Srishanth S",
-  "department": "ICE",
-  "balance": 400,
-  "currency": "INR",
-  "card_number_masked": "•••• •••• 4125",
-  "card_id": "110124125",
-  "status": "active",
-  "recent_transactions": [
-    { "id": "txn_9182", "merchant": "Mega Store - Snacks", "amount": -80, "timestamp": "2026-09-11T13:12:00+05:30" },
-    { "id": "txn_9179", "merchant": "Ibaco", "amount": -150, "timestamp": "2026-09-11T11:45:00+05:30" },
-    { "id": "txn_9150", "merchant": "Top-up", "amount": 500, "timestamp": "2026-09-10T09:00:00+05:30" }
-  ]
-}
+[
+  {
+    "user_id": "1ed71db8-82a7-4088-a6b8-16e209fbc6b8",
+    "name": "S A Aadil",
+    "department": "ICE",
+    "balance": 400,
+    "currency": "INR",
+    "card_number_masked": "•••• •••• 4125",
+    "card_id": "110124125",
+    "status": "active",
+    "recent_transactions": [
+      {
+        "id": "txn_1001",
+        "merchant": "NITTFest Top-up Counter",
+        "amount": 500,
+        "timestamp": "2026-09-14T10:00:00+05:30"
+      },
+      {
+        "id": "txn_1002",
+        "merchant": "Ibaco",
+        "amount": -150,
+        "timestamp": "2026-09-14T14:30:00+05:30"
+      },
+      {
+        "id": "txn_1003",
+        "merchant": "Mega Store - Snacks",
+        "amount": -80,
+        "timestamp": "2026-09-15T12:15:00+05:30"
+      },
+      {
+        "id": "txn_1004",
+        "merchant": "Chai & Maggi Corner",
+        "amount": -40,
+        "timestamp": "2026-09-16T11:00:00+05:30"
+      },
+      {
+        "id": "txn_1005",
+        "merchant": "NITTFest Top-up Counter",
+        "amount": 200,
+        "timestamp": "2026-09-16T13:45:00+05:30"
+      },
+      {
+        "id": "txn_1006",
+        "merchant": "Food Court - Kathi Rolls",
+        "amount": -30,
+        "timestamp": "2026-09-16T15:20:00+05:30"
+      }
+    ]
+  },
+  {
+    "user_id": "8100c21e-dea1-4c0e-9492-cd14ac3fbf18",
+    "name": "Atikur",
+    "department": "ICE",
+    "balance": 750,
+    "currency": "INR",
+    "card_number_masked": "•••• •••• 4057",
+    "card_id": "110124057",
+    "status": "active",
+    "recent_transactions": [
+      {
+        "id": "txn_1007",
+        "merchant": "Online UPI Top-up",
+        "amount": 1000,
+        "timestamp": "2026-09-14T11:15:00+05:30"
+      },
+      {
+        "id": "txn_1008",
+        "merchant": "NITTFest Merch Desk - Hoodie",
+        "amount": -600,
+        "timestamp": "2026-09-14T16:00:00+05:30"
+      },
+      {
+        "id": "txn_1009",
+        "merchant": "Online UPI Top-up",
+        "amount": 500,
+        "timestamp": "2026-09-15T10:30:00+05:30"
+      },
+      {
+        "id": "txn_1010",
+        "merchant": "Gaming Arena - Entry Fee",
+        "amount": -150,
+        "timestamp": "2026-09-16T14:10:00+05:30"
+      }
+    ]
+  },
+  {
+    "user_id": "4f9b8c21-3e5a-4b72-91d0-a8c6e2f10534",
+    "name": "Ananya Sharma",
+    "department": "CSE",
+    "balance": 850,
+    "currency": "INR",
+    "card_number_masked": "•••• •••• 5821",
+    "card_id": "110124231",
+    "status": "active",
+    "recent_transactions": [
+      {
+        "id": "txn_1011",
+        "merchant": "Online UPI Top-up",
+        "amount": 1000,
+        "timestamp": "2026-09-14T09:30:00+05:30"
+      },
+      {
+        "id": "txn_1012",
+        "merchant": "Main Stage - Proshow Pass",
+        "amount": -250,
+        "timestamp": "2026-09-14T18:00:00+05:30"
+      },
+      {
+        "id": "txn_1013",
+        "merchant": "Juice Box - Cold Drinks",
+        "amount": -60,
+        "timestamp": "2026-09-15T13:40:00+05:30"
+      },
+      {
+        "id": "txn_1014",
+        "merchant": "NITTFest Top-up Counter",
+        "amount": 300,
+        "timestamp": "2026-09-16T11:20:00+05:30"
+      },
+      {
+        "id": "txn_1015",
+        "merchant": "Chai & Maggi Corner",
+        "amount": -140,
+        "timestamp": "2026-09-16T16:05:00+05:30"
+      }
+    ]
+  },
+  {
+    "user_id": "a2c7d9e1-6b48-4f53-8e9a-7c1b5f3d2046",
+    "name": "Rohan Verma",
+    "department": "ECE",
+    "balance": 620,
+    "currency": "INR",
+    "card_number_masked": "•••• •••• 7388",
+    "card_id": "110124388",
+    "status": "active",
+    "recent_transactions": [
+      {
+        "id": "txn_1016",
+        "merchant": "NITTFest Top-up Counter",
+        "amount": 800,
+        "timestamp": "2026-09-14T12:00:00+05:30"
+      },
+      {
+        "id": "txn_1017",
+        "merchant": "Mega Store - Snacks",
+        "amount": -110,
+        "timestamp": "2026-09-15T11:45:00+05:30"
+      },
+      {
+        "id": "txn_1018",
+        "merchant": "Food Court - Kathi Rolls",
+        "amount": -70,
+        "timestamp": "2026-09-16T14:30:00+05:30"
+      }
+    ]
+  },
+  {
+    "user_id": "c8e4f1a0-9b32-4d76-b51f-2e8c0a9d7431",
+    "name": "Priya Sundaram",
+    "department": "MECH",
+    "balance": 45,
+    "currency": "INR",
+    "card_number_masked": "•••• •••• 9419",
+    "card_id": "110124419",
+    "status": "active",
+    "recent_transactions": [
+      {
+        "id": "txn_1019",
+        "merchant": "Online UPI Top-up",
+        "amount": 500,
+        "timestamp": "2026-09-14T10:15:00+05:30"
+      },
+      {
+        "id": "txn_1020",
+        "merchant": "NITTFest Merch Desk - Badge & Cap",
+        "amount": -320,
+        "timestamp": "2026-09-14T17:20:00+05:30"
+      },
+      {
+        "id": "txn_1021",
+        "merchant": "Juice Box - Cold Drinks",
+        "amount": -55,
+        "timestamp": "2026-09-15T15:00:00+05:30"
+      },
+      {
+        "id": "txn_1022",
+        "merchant": "Chai & Maggi Corner",
+        "amount": -80,
+        "timestamp": "2026-09-16T12:30:00+05:30"
+      }
+    ]
+  },
+  {
+    "user_id": "7d1e0b5a-4c93-4f82-a6e5-1b3c9d7f0284",
+    "name": "Karthik Narayanan",
+    "department": "EEE",
+    "balance": 300,
+    "currency": "INR",
+    "card_number_masked": "•••• •••• 3502",
+    "card_id": "110124502",
+    "status": "active",
+    "recent_transactions": [
+      {
+        "id": "txn_1023",
+        "merchant": "NITTFest Top-up Counter",
+        "amount": 600,
+        "timestamp": "2026-09-14T13:10:00+05:30"
+      },
+      {
+        "id": "txn_1024",
+        "merchant": "Robotics Expo - Kit Purchase",
+        "amount": -200,
+        "timestamp": "2026-09-15T11:00:00+05:30"
+      },
+      {
+        "id": "txn_1025",
+        "merchant": "Food Court - Kathi Rolls",
+        "amount": -100,
+        "timestamp": "2026-09-16T13:15:00+05:30"
+      }
+    ]
+  },
+  {
+    "user_id": "e5a2c8f1-0d74-4b96-931a-6f2e8c0b5d49",
+    "name": "Sneha Reddy",
+    "department": "CHEM",
+    "balance": 0,
+    "currency": "INR",
+    "card_number_masked": "•••• •••• 6174",
+    "card_id": "110124674",
+    "status": "active",
+    "recent_transactions": [
+      {
+        "id": "txn_1026",
+        "merchant": "Online UPI Top-up",
+        "amount": 400,
+        "timestamp": "2026-09-14T09:00:00+05:30"
+      },
+      {
+        "id": "txn_1027",
+        "merchant": "Dance Battle - Registration Desk",
+        "amount": -250,
+        "timestamp": "2026-09-15T10:45:00+05:30"
+      },
+      {
+        "id": "txn_1028",
+        "merchant": "Ibaco",
+        "amount": -150,
+        "timestamp": "2026-09-16T16:00:00+05:30"
+      }
+    ]
+  },
+  {
+    "user_id": "3b9f1e7a-5c28-4d06-a84e-0f1c7e9a3b62",
+    "name": "Vikram Patel",
+    "department": "CIV",
+    "balance": 250,
+    "currency": "INR",
+    "card_number_masked": "•••• •••• 8290",
+    "card_id": "110124790",
+    "status": "suspended",
+    "recent_transactions": [
+      {
+        "id": "txn_1029",
+        "merchant": "Online UPI Top-up",
+        "amount": 500,
+        "timestamp": "2026-09-14T14:00:00+05:30"
+      },
+      {
+        "id": "txn_1030",
+        "merchant": "Mega Store - Snacks",
+        "amount": -150,
+        "timestamp": "2026-09-15T12:00:00+05:30"
+      },
+      {
+        "id": "txn_1031",
+        "merchant": "Gaming Arena - Entry Fee",
+        "amount": -100,
+        "timestamp": "2026-09-15T15:30:00+05:30"
+      }
+    ]
+  }
+]

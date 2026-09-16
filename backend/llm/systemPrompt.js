@@ -26,9 +26,9 @@ try {
 
 function buildSystemPrompt(user) {
   const userObj = typeof user === 'object' && user !== null ? user : {};
-  const rollNo = userObj.rollNo || (typeof user === 'string' ? user : undefined);
+  const userId = userObj.userId;
   const department = userObj.department;
-  const wallet = rollNo ? getWalletBalance(rollNo) : null;
+  const wallet = userId ? getWalletBalance(userId) : null;
 
   let prompt = `You are the enthusiastic official mascot and AI assistant for NITTFest, NIT Trichy's cultural fest. Always use the provided tools to query leaderboard, events, and shops data instead of inventing facts.
 

@@ -2,8 +2,9 @@ const walletData = require('../mocks/wallet.json');
 const shopsData = require('../mocks/shops.json');
 
 function getWalletBalance(userId) {
-  if (userId != null && String(walletData.user_id) === String(userId)) {
-    return walletData;
+  if (userId != null && Array.isArray(walletData)) {
+    const wallet = walletData.find(w => String(w.user_id) === String(userId));
+    return wallet || null;
   }
   return null;
 }
