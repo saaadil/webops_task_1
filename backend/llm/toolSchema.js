@@ -75,6 +75,23 @@ const tools = [
         required: ['type']
       }
     }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'suggestSpendCombo',
+      description: "Get real computed affordable shop options and combos within the user's actual wallet balance.",
+      parameters: {
+        type: 'object',
+        properties: {
+          userId: {
+            type: 'string',
+            description: 'The user ID whose wallet balance to check for affordable options and combos.'
+          }
+        },
+        required: ['userId']
+      }
+    }
   }
 ];
 
