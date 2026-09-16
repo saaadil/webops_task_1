@@ -22,7 +22,7 @@ router.post('/', authenticateToken, async (req, res) => {
       { role: 'user', content: req.body.message }
     ];
 
-    const MAX_ITERATIONS = 3;
+    const MAX_ITERATIONS = 4;
     let iteration = 0;
     let finalReply = null;
 
